@@ -154,8 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _joyStick: {fileID: 932757184}
   _playerView: {fileID: 6598591594767267528}
+  _playerWeaponController: {fileID: 6598591594767267532}
   _levelConfiguration: {fileID: 11400000, guid: 9ccb5e920685647779c0ccc7151e00f8, type: 2}
-  _weaponData: {fileID: 11400000, guid: c64b88d827d094234ad9143da31ee82e, type: 2}
   _mainCamera: {fileID: 2079805547}
 --- !u!4 &343482765
 Transform:
@@ -388,6 +388,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1783603687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1783603688}
+  - component: {fileID: 1783603689}
+  m_Layer: 0
+  m_Name: Crossbow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1783603688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783603687}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6598591594767267529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1783603689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783603687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e529b86a5431b4b9e95ed65306ca6848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 0.4
+  _arrowPrefab: {fileID: 5758307530459511663, guid: 2059cb9d4e3484bb6a58b2eedd996b9e, type: 3}
+  _projectileSpeed: 14
+  _projectileLifetime: 6
+  _maxRicochets: 5
+--- !u!1 &1922484293 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1608911986764994325, guid: 88589e8513862483c82c6fe8ca24de4c, type: 3}
+  m_PrefabInstance: {fileID: 6598591594767267527}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1956118767
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,20 +589,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6231471161465838750, guid: 88589e8513862483c82c6fe8ca24de4c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1783603688}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1608911986764994325, guid: 88589e8513862483c82c6fe8ca24de4c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6598591594767267532}
   m_SourcePrefab: {fileID: 100100000, guid: 88589e8513862483c82c6fe8ca24de4c, type: 3}
 --- !u!114 &6598591594767267528 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7303482460933082913, guid: 88589e8513862483c82c6fe8ca24de4c, type: 3}
   m_PrefabInstance: {fileID: 6598591594767267527}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1922484293}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f87665104b5640cf96308e5f68356cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &6598591594767267529 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6231471161465838750, guid: 88589e8513862483c82c6fe8ca24de4c, type: 3}
+  m_PrefabInstance: {fileID: 6598591594767267527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6598591594767267532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922484293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bade3cf33344d1bb9e6aa9ef15ffea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equippedWeapon: {fileID: 1783603689}
+  _firePoint: {fileID: 6598591594767267529}
+  _camera: {fileID: 0}
+  _useMouseAim: 0
+  _aimDeadZone: 0.05
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

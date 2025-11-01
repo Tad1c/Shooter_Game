@@ -9,6 +9,7 @@ namespace Scripts
         [Header("Player")]
         [SerializeField] private JoystickView _joyStick;
         [SerializeField] private PlayerView _playerView;
+        [SerializeField] private Weapons.PlayerWeaponController _playerWeaponController;
 
         [Header("Level Configuration")]
         [SerializeField] private LevelConfiguration _levelConfiguration;
@@ -34,8 +35,14 @@ namespace Scripts
             Container.BindInstance(_mainCamera).AsSingle();
 
             // Player
+            if (_playerWeaponController == null)
+            {
+                Debug.LogError("PlayerWeaponController is not assigned in GameInstaller.");
+            }
+
             Container.BindInstance(_playerView);
             Container.BindInstance(_joyStick);
+            Container.BindInstance(_playerWeaponController);
             Container.BindInterfacesTo<PlayerModel>().AsSingle();
             Container.BindInterfacesTo<PlayerPresenter>().AsSingle().NonLazy();
 
