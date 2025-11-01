@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdbd0c66774f4150a6162efb5cec906, type: 3}
+  m_Name: Wave_02_Medium
+  m_EditorClassIdentifier: 
+  _waveName: Wave 02 Medium
+  _description: Medium Wave - Mixed enemies
+  _enemySpawns:
+  - _enemyData: {fileID: 11400000, guid: 53f98afd5d0c1475d8eeccff31d9ad89, type: 2}
+    _spawnWeight: 60
+    _isEnabled: 1
+  - _enemyData: {fileID: 11400000, guid: 5d696a7dac42248ed95b02a19e5439d8, type: 2}
+    _spawnWeight: 40
+    _isEnabled: 1
+  _spawnInterval: 2
+  _enemiesPerSpawn: 1
+  _completionType: 0
+  _requiredKills: 20
+  _waveDuration: 45

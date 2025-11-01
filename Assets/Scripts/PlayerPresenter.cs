@@ -24,7 +24,23 @@ namespace Scripts
         {
             _joystickView.OnInput.Subscribe(_playerView.Move).AddTo(_disposer);
             
-            _playerModel.CurrentHealth.Subscribe(_playerView.UpdateHealth).AddTo(_disposer);
+            // Update health bar with normalized health (0-1)
+            _playerModel.CurrentHealth
+                .Select(health => health / _playerModel.MaxHealth.Value)
+                .Subscribe(_playerView.UpdateHealth)
+                .AddTo(_disposer);
+            
+            // Handle death
+            _playerModel.IsAlive
+                .Where(isAlive => !isAlive)
+                .Subscribe(_ => OnPlayerDeath())
+                .AddTo(_disposer);
+        }
+
+        private void OnPlayerDeath()
+        {
+            // Could add death animation, game over screen, etc.
+            //Debug.Log("Player death handled in presenter");
         }
     }
 }
