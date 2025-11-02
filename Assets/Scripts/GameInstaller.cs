@@ -11,6 +11,9 @@ namespace Scripts
         [SerializeField] private PlayerView _playerView;
         [SerializeField] private Weapons.PlayerWeaponController _playerWeaponController;
 
+        [Header("Weapons")]
+        [SerializeField] private Weapons.CrossbowWeaponData _crossbowWeaponData;
+
         [Header("Level Configuration")]
         [SerializeField] private LevelConfiguration _levelConfiguration;
 
@@ -39,12 +42,22 @@ namespace Scripts
             {
                 Debug.LogError("PlayerWeaponController is not assigned in GameInstaller.");
             }
+            if (_crossbowWeaponData == null)
+            {
+                Debug.LogError("CrossbowWeaponData is not assigned in GameInstaller.");
+            }
 
             Container.BindInstance(_playerView);
             Container.BindInstance(_joyStick);
             Container.BindInstance(_playerWeaponController);
             Container.BindInterfacesTo<PlayerModel>().AsSingle();
             Container.BindInterfacesTo<PlayerPresenter>().AsSingle().NonLazy();
+
+            if (_crossbowWeaponData != null)
+            {
+                Container.BindInstance(_crossbowWeaponData).IfNotBound();
+                Container.Bind<Weapons.WeaponData>().FromInstance(_crossbowWeaponData).IfNotBound();
+            }
 
             // Level Configuration
             Container.BindInstance(_levelConfiguration).AsSingle();

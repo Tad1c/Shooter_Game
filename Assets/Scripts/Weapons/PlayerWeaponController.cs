@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace Scripts.Weapons
 {
@@ -7,6 +8,7 @@ namespace Scripts.Weapons
         [Header("Weapon Setup")]
         [SerializeField] private WeaponBehaviour _equippedWeapon;
         [SerializeField] private Transform _firePoint;
+        [SerializeField] private WeaponData _weaponData;
 
         [Header("Aiming")]
         [SerializeField] private Camera _camera;
@@ -16,8 +18,17 @@ namespace Scripts.Weapons
         private float _nextFireTime;
         private Vector2 _externalAimDirection = Vector2.zero;
         private Vector2 _mouseAimDirection = Vector2.right;
+        private DiContainer _container;
+        private WeaponData _injectedWeaponData;
 
         public WeaponBehaviour EquippedWeapon => _equippedWeapon;
+
+        [Inject]
+        public void Construct(DiContainer container, [InjectOptional] WeaponData weaponData = null)
+        {
+            _container = container;
+            _injectedWeaponData = weaponData;
+        }
 
         private void Awake()
         {
@@ -80,7 +91,7 @@ namespace Scripts.Weapons
             return true;
         }
 
-        public void EquipWeapon(WeaponBehaviour newWeapon)
+        public void EquipWeapon(WeaponBehaviour newWeapon, WeaponData weaponData = null)
         {
             if (newWeapon == null)
             {
@@ -94,10 +105,15 @@ namespace Scripts.Weapons
             }
 
             _equippedWeapon = newWeapon;
+            if (weaponData != null)
+            {
+                _weaponData = weaponData;
+            }
+
             InitializeEquippedWeapon();
         }
 
-        public WeaponBehaviour EquipWeaponFromPrefab(WeaponBehaviour weaponPrefab)
+        public WeaponBehaviour EquipWeaponFromPrefab(WeaponBehaviour weaponPrefab, WeaponData weaponData = null)
         {
             if (weaponPrefab == null)
             {
@@ -106,7 +122,7 @@ namespace Scripts.Weapons
             }
 
             var instance = Instantiate(weaponPrefab, transform);
-            EquipWeapon(instance);
+            EquipWeapon(instance, weaponData);
             return instance;
         }
 
@@ -117,7 +133,15 @@ namespace Scripts.Weapons
                 return;
             }
 
-            var context = new WeaponRuntimeContext(transform, _firePoint, _camera);
+            _container?.Inject(_equippedWeapon);
+
+            var data = GetActiveWeaponData();
+            if (data != null)
+            {
+                _equippedWeapon.SetData(data);
+            }
+
+            var context = new WeaponRuntimeContext(transform, _firePoint, _camera, _container);
             _equippedWeapon.Initialize(context);
             _nextFireTime = Time.time;
         }
@@ -156,6 +180,16 @@ namespace Scripts.Weapons
             {
                 _mouseAimDirection = planarDirection.normalized;
             }
+        }
+
+        private WeaponData GetActiveWeaponData()
+        {
+            if (_injectedWeaponData != null)
+            {
+                return _injectedWeaponData;
+            }
+
+            return _weaponData;
         }
     }
 }

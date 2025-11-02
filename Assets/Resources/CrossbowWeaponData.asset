@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7efe689871fb14bc29fbbb498dd4a468, type: 3}
+  m_Name: CrossbowWeaponData
+  m_EditorClassIdentifier: 
+  _cooldown: 0.4
+  _arrowPrefab: {fileID: 5758307530459511663, guid: 2059cb9d4e3484bb6a58b2eedd996b9e, type: 3}
+  _projectileSpeed: 14
+  _projectileLifetime: 6
+  _maxRicochets: 5

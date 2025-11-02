@@ -155,6 +155,7 @@ MonoBehaviour:
   _joyStick: {fileID: 932757184}
   _playerView: {fileID: 6598591594767267528}
   _playerWeaponController: {fileID: 6598591594767267532}
+  _crossbowWeaponData: {fileID: 11400000, guid: 41b05ad56d7a64702b85f0202f8aa5d1, type: 2}
   _levelConfiguration: {fileID: 11400000, guid: 9ccb5e920685647779c0ccc7151e00f8, type: 2}
   _mainCamera: {fileID: 2079805547}
 --- !u!4 &343482765
@@ -432,11 +433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e529b86a5431b4b9e95ed65306ca6848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown: 0.4
-  _arrowPrefab: {fileID: 5758307530459511663, guid: 2059cb9d4e3484bb6a58b2eedd996b9e, type: 3}
-  _projectileSpeed: 14
-  _projectileLifetime: 6
-  _maxRicochets: 5
+  _defaultData: {fileID: 11400000, guid: 41b05ad56d7a64702b85f0202f8aa5d1, type: 2}
+  _fallbackData: {fileID: 11400000, guid: 41b05ad56d7a64702b85f0202f8aa5d1, type: 2}
 --- !u!1 &1922484293 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1608911986764994325, guid: 88589e8513862483c82c6fe8ca24de4c, type: 3}
@@ -628,6 +626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _equippedWeapon: {fileID: 1783603689}
   _firePoint: {fileID: 6598591594767267529}
+  _weaponData: {fileID: 0}
   _camera: {fileID: 0}
   _useMouseAim: 0
   _aimDeadZone: 0.05

@@ -1,14 +1,30 @@
 using UnityEngine;
+using Zenject;
 
 namespace Scripts.Weapons
 {
     public class CrossbowWeapon : WeaponBehaviour
     {
-        [Header("Crossbow Settings")]
-        [SerializeField] private ArrowProjectile _arrowPrefab;
-        [SerializeField, Min(0f)] private float _projectileSpeed = 14f;
-        [SerializeField, Min(0f)] private float _projectileLifetime = 6f;
-        [SerializeField, Min(0)] private int _maxRicochets = 5;
+        [SerializeField] private CrossbowWeaponData _fallbackData;
+
+        private CrossbowWeaponData Config => GetData<CrossbowWeaponData>() ?? _fallbackData;
+
+        [Inject(Optional = true)]
+        public void Construct(CrossbowWeaponData data)
+        {
+            if (data != null)
+            {
+                SetData(data);
+            }
+        }
+
+        private void Awake()
+        {
+            if (_fallbackData != null && GetDefaultData() == null)
+            {
+                SetDefaultData(_fallbackData);
+            }
+        }
 
         public override void Fire(Vector2 direction)
         {
@@ -18,7 +34,14 @@ namespace Scripts.Weapons
                 return;
             }
 
-            if (_arrowPrefab == null)
+            var config = Config;
+            if (config == null)
+            {
+                Debug.LogWarning($"{name} has no weapon data assigned.");
+                return;
+            }
+
+            if (config.ArrowPrefab == null)
             {
                 Debug.LogWarning($"{name} has no arrow prefab assigned.");
                 return;
@@ -31,9 +54,21 @@ namespace Scripts.Weapons
 
             var normalizedDirection = direction.normalized;
             var firePoint = Context.FirePoint != null ? Context.FirePoint : transform;
+            var container = Context.Container;
 
-            var arrowInstance = Instantiate(_arrowPrefab, firePoint.position, Quaternion.identity);
-            arrowInstance.Initialize(normalizedDirection, _projectileSpeed, _maxRicochets, Context.Camera, _projectileLifetime);
+            ArrowProjectile arrowInstance;
+            if (container != null)
+            {
+                arrowInstance = container.InstantiatePrefabForComponent<ArrowProjectile>(config.ArrowPrefab.gameObject,
+                    firePoint.position, Quaternion.identity, null);
+            }
+            else
+            {
+                arrowInstance = Instantiate(config.ArrowPrefab, firePoint.position, Quaternion.identity);
+            }
+
+            arrowInstance.Initialize(normalizedDirection, config.ProjectileSpeed, config.MaxRicochets, Context.Camera,
+                config.ProjectileLifetime);
         }
     }
 }
