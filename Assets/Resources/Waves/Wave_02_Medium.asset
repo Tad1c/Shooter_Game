@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Wave_02_Medium
   m_EditorClassIdentifier: 
   _waveName: Wave 02 Medium
-  _description: Medium Wave - Mixed enemies
   _enemySpawns:
   - _enemyData: {fileID: 11400000, guid: 53f98afd5d0c1475d8eeccff31d9ad89, type: 2}
     _spawnWeight: 60
@@ -22,7 +21,7 @@ MonoBehaviour:
     _spawnWeight: 40
     _isEnabled: 1
   _spawnInterval: 2
-  _enemiesPerSpawn: 1
+  _enemiesPerSpawn: 7
   _completionType: 0
   _requiredKills: 20
   _waveDuration: 45
